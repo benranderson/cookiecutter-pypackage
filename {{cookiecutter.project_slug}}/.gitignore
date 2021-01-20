@@ -99,3 +99,13 @@ cookiecutter-pypackage-env/
 
 # IDE settings
 .vscode/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# pyenv
+.python-version
+
+# profiling
+*.lprof
+profile.stats
