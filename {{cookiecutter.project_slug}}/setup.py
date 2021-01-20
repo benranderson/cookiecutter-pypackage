@@ -39,4 +39,5 @@ setup(
     package_dir={"": "src"},
     long_description_content_type="text/markdown",
     python_requires=">=3.7",
+    entry_points={"console_scripts": ["{{ cookiecutter.project_slug }} = {{ cookiecutter.project_slug }}.__main__:app"]},
 )
