@@ -34,8 +34,9 @@ setup(
     maintainer=find_meta("author"),
     maintainer_email=find_meta("email"),
     install_requires=get_file_contents("requirements.txt", splitlines=True),
+    extras_require={"dev": get_file_contents("requirements-dev.txt", splitlines=True)},
     packages=find_packages(where="src"),
     package_dir={"": "src"},
     long_description_content_type="text/markdown",
-    python_requires=">=3.7"
+    python_requires=">=3.7",
 )
