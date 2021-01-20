@@ -1,0 +1,119 @@
+variables:
+  package: {{ cookiecutter.project_slug }}
+  srcDirectory: src/$(package)
+  testsDirectory: tests/
+  vmImage: windows-latest
+  azureProject: {{ cookiecutter.azure_project }}
+  artifactFeed: {{ cookiecutter.artifact_feed }}
+  publishedVersion: 3.8
+
+# trigger only when the package or its build has been modified
+trigger:
+  branches:
+    include:
+    - "*"
+    - refs/tags/*
+
+jobs:
+
+- job: FormattingSafety
+
+  pool:
+    vmImage: $(vmImage)
+
+  steps:
+
+    - task: UsePythonVersion@0
+      displayName: Use Python $(publishedVersion)
+      inputs:
+        versionSpec: $(publishedVersion)
+
+    - script: |
+        pip install black
+        black $(srcDirectory) $(testsDirectory)
+      displayName: Black formatting check
+
+    - script: |
+        pip install safety
+        safety check --file=requirements.txt --full-report
+      displayName: Check for security vulnerabilities
+
+- job: Build
+
+  strategy:
+    matrix:
+      python37:
+        pythonVersion: 3.7
+      python38:
+        pythonVersion: 3.8
+      python39:
+        pythonVersion: 3.9
+
+  pool:
+    vmImage: $(vmImage)
+
+  steps:
+
+    - task: UsePythonVersion@0
+      displayName: Use Python $(pythonVersion)
+      inputs:
+        versionSpec: $(pythonVersion)
+
+    - script: |
+        pip install flake8 flake8-bandit flake8-black flake8-bugbear flake8-comprehensions flake8-isort
+        flake8 $(srcDirectory) $(testsDirectory)
+      displayName: Linting check
+
+    - script: |
+        pip install pytest pytest-azurepipelines pytest-cov
+        pip install .
+        pytest $(testsDirectory) --cov $(package) --cov-report html
+      displayName: Run the test suite
+
+    - script: |
+        pip install setuptools wheel
+        python setup.py sdist bdist_wheel
+      displayName: Build package
+
+    # upload everything in dist/ to the build artifacts for later use or debugging
+    - task: PublishPipelineArtifact@0
+      displayName: Publish package artifacts
+      inputs:
+        artifactName: dist$(pythonVersion)
+        targetPath: dist
+
+- job: Publish
+
+  pool:
+    vmImage: $(vmImage)
+
+  dependsOn: Build
+
+  # only publish when the previous Jobs are successful and a tag is pushed
+  condition: and(succeeded(), startsWith(variables['build.sourceBranch'], 'refs/tags/'))
+
+  steps:
+
+    # explicitly disable source checkout to keep a pristine environment for publishing
+    - checkout: none
+
+    # download from build artifacts
+    - download: current
+      artifact: dist$(publishedVersion)
+
+    # set the version of Python to use for publishing
+    - task: UsePythonVersion@0
+      displayName: Use Python $(publishedVersion)
+      inputs:
+        versionSpec: $(publishedVersion)
+
+    - script: pip install twine
+      displayName: Install packages for publishing
+
+    - task: TwineAuthenticate@1
+      displayName: Configure twine authentication
+      inputs:
+        artifactFeed: $(azureProject)/$(artifactFeed)
+
+    - script: twine upload -r $(artifactFeed) --config-file $(PYPIRC_PATH) $(Pipeline.Workspace)/dist$(publishedVersion)/*.whl
+      displayName: Publish package to artifacts feed
