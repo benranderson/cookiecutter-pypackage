@@ -4,5 +4,6 @@
     "project_name": "PyPackage",
     "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}",
     "project_short_description": "Boilerplate for a Python package.",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "repo_url": "https://dev.azure.com/technipfmc-dev/SubseaDesign/_git/{{ cookiecutter.project_slug }}"
 }

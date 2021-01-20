@@ -33,6 +33,7 @@ setup(
     author_email=find_meta("email"),
     maintainer=find_meta("author"),
     maintainer_email=find_meta("email"),
+    url=find_meta("url"),
     install_requires=get_file_contents("requirements.txt", splitlines=True),
     extras_require={"dev": get_file_contents("requirements-dev.txt", splitlines=True)},
     packages=find_packages(where="src"),

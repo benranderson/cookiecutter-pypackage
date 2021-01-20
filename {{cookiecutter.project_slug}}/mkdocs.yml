@@ -10,7 +10,7 @@ theme:
         - navigation.tabs
 
 repo_name: {{ cookiecutter.project_slug }}
-# repo_url: https://dev.azure.com/technipfmc-dev/SubseaDesign/_git/fastpipe
+repo_url: {{ cookiecutter.repo_url }}
 edit_uri: ''
 
 markdown_extensions:

@@ -14,6 +14,8 @@
 
 ---
 
+**Source Code:** [{{ cookiecutter.repo_url }}]({{ cookiecutter.repo_url }})
+
 **Version:** {{ cookiecutter.version }}
 
 ---
