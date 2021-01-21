@@ -1,4 +1,4 @@
-.PHONY: help, clean clean-test clean-pyc clean-build
+.PHONY: help clean clean-test clean-pyc clean-build lint test test-all build
 .DEFAULT_GOAL := help
 
 define PRINT_HELP_PYSCRIPT
@@ -40,3 +40,19 @@ clean-test: ## remove test and coverage artifacts
 	rm -fr .pytest_cache
 	rm -f .testmondata
 	rm -fr .hypothesis
+
+lint: ## check style with flake8
+	flake8 src tests noxfile.py
+
+test: ## run tests quickly with default Python and check coverage
+	pytest --cov src --cov-report term --cov-report html
+	open htmlcov/index.html
+
+test-all: ## run tests on every Python version with nox
+	nox
+
+safe: ## check for security vulnerabilities
+	safety check --file=requirements.txt --full-report
+
+build: clean ## build package
+	python setup.py sdist bdist_wheel
