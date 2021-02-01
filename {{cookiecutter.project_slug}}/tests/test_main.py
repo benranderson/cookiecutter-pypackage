@@ -1,3 +1,5 @@
+"""CLI unit tests."""
+
 import pytest
 from typer.testing import CliRunner
 
