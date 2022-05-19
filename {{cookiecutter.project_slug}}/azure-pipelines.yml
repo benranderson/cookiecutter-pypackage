@@ -5,7 +5,7 @@ variables:
   vmImage: windows-latest
   azureProject: {{ cookiecutter.azure_project }}
   artifactFeed: {{ cookiecutter.artifact_feed }}
-  publishedVersion: 3.8
+  publishedVersion: 3.10
 
 # trigger only when the package or its build has been modified
 trigger:
@@ -48,6 +48,8 @@ jobs:
         pythonVersion: 3.8
       python39:
         pythonVersion: 3.9
+      python310:
+        pythonVersion: 3.10
 
   pool:
     vmImage: $(vmImage)
@@ -59,8 +61,9 @@ jobs:
       inputs:
         versionSpec: $(pythonVersion)
 
-    - script: |
-        pip install flake8 flake8-bandit flake8-black flake8-bugbear flake8-comprehensions flake8-isort
+        - script: |
+        pip install flake8 flake8-bandit flake8-black flake8-broken-line flake8-bugbear flake8-comprehensions flake8-debugger isort
+        isort --profile black $(srcDirectory)
         flake8 $(srcDirectory) $(testsDirectory)
       displayName: Linting check
 
