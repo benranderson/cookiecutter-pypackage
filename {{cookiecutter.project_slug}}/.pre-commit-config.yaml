@@ -1,6 +1,6 @@
 repos:
 -   repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v3.4.0
+    rev: v4.2.0
     hooks:
     -   id: check-yaml
     -   id: end-of-file-fixer
@@ -8,6 +8,13 @@ repos:
     -   id: detect-private-key
     -   id: requirements-txt-fixer
     -   id: check-case-conflict
+    -   id: check-docstring-first
+    -   id: debug-statements
+-   repo: https://github.com/pycqa/isort
+    rev: 5.10.1
+    hooks:
+    -   id: isort
+        args: ["--profile", "black"]
 -   repo: local
     hooks:
     -   id: black
