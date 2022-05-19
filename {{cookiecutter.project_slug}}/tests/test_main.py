@@ -1,7 +1,7 @@
 """CLI unit tests."""
 
 import pytest
-from typer.testing import CliRunner
+from click.testing import CliRunner
 
 import {{ cookiecutter.project_slug }}.__main__ as main
 from {{ cookiecutter.project_slug }} import __version__

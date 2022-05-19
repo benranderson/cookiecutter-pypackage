@@ -1,35 +1,30 @@
-from typing import Optional
+import click
 
-import typer
-
-from {{ cookiecutter.project_slug }} import __version__
-
-app = typer.Typer()
+from {{ cookiecutter.project_slug }} import __version__, logger
 
 
-def version_callback(value: bool):
-    if value:
-        typer.echo(f"{{ cookiecutter.project_slug }} version {__version__}")
-        raise typer.Exit()
-
-
-@app.callback()
-def callback(
-    version: Optional[bool] = typer.Option(
-        None,
-        "--version",
-        "-V",
-        callback=version_callback,
-        help="Show {{ cookiecutter.project_name }} version.",
-    ),
-):
+@click.group()
+@click.version_option(
+    __version__, "-V", "--version", help="Show version information and exit."
+)
+@click.option(
+    "--debug/--no-debug",
+    default=False,
+    help="Print debug information (used for development).",
+)
+def app(debug):
     """{{ cookiecutter.project_short_description }}"""
+    if debug:
+        logger.setLevel("DEBUG")
+        click.echo(" * Debug mode: on")
+    else:
+        logger.setLevel("INFO")
 
 
 @app.command()
 def command():
     """A command description."""
-    typer.echo("Running command...")
+    click.echo("Running command...")
 
 
 if __name__ == "__main__":
