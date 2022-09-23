@@ -4,7 +4,7 @@ Cookiecutter template for a Python package.
 
 ## Features
 
-- Command line interface using [Typer](https://typer.tiangolo.com)
+- Command line interface using [Click](https://click.palletsprojects.com/en/8.1.x/)
 - Testing setup with [pytest](https://docs.pytest.org/en/stable/)
 - Test against multiple Python versions with [nox](https://nox.thea.codes/en/stable/)
 - Continuous Integration using [azure-pipelines](https://azure.microsoft.com/en-gb/services/devops/pipelines/)
