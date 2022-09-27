@@ -1,4 +1,4 @@
-.PHONY: help clean clean-test clean-pyc clean-build lint test test-all build
+.PHONY: help clean clean-test clean-pyc clean-build lint test test-all build docs
 .DEFAULT_GOAL := help
 
 define PRINT_HELP_PYSCRIPT
