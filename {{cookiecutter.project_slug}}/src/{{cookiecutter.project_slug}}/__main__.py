@@ -1,4 +1,4 @@
-import click
+import rich_click as click
 
 from {{ cookiecutter.project_slug }} import __version__, logger
 

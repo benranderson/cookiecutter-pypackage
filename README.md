@@ -4,8 +4,8 @@ Cookiecutter template for a Python package.
 
 ## Features
 
-- Command line interface using [Click](https://click.palletsprojects.com/en/8.1.x/)
-- Testing setup with [pytest](https://docs.pytest.org/en/stable/)
+- Command line interface using [Click](https://click.palletsprojects.com/en/8.1.x/) and [rich-click](https://github.com/ewels/rich-click) for nice formatting
+- Testing setup with [pytest](https://docs.pytest.org/en/stable/) and [pytest-cov](https://github.com/pytest-dev/pytest-cov)
 - Test against multiple Python versions with [nox](https://nox.thea.codes/en/stable/)
 - Continuous Integration using [azure-pipelines](https://azure.microsoft.com/en-gb/services/devops/pipelines/)
 - Auto-release to an [Azure Artifacts Feed](https://azure.microsoft.com/en-us/services/devops/artifacts/) when you push a new tag
