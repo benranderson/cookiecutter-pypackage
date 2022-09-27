@@ -22,5 +22,6 @@ pip install {{ cookiecutter.project_slug }}
 
 ```{toctree}
 :hidden:
+Command Reference <commands>
 Release Notes <release-notes>
 ```
