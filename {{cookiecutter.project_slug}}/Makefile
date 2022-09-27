@@ -56,3 +56,6 @@ safe: ## check for security vulnerabilities
 
 build: clean ## build package
 	python setup.py sdist bdist_wheel
+
+docs: ## Rebuild docs on changes, with live-reload in the browser
+	sphinx-autobuild docs docs/_build/html

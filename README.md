@@ -9,7 +9,7 @@ Cookiecutter template for a Python package.
 - Test against multiple Python versions with [nox](https://nox.thea.codes/en/stable/)
 - Continuous Integration using [azure-pipelines](https://azure.microsoft.com/en-gb/services/devops/pipelines/)
 - Auto-release to an [Azure Artifacts Feed](https://azure.microsoft.com/en-us/services/devops/artifacts/) when you push a new tag
-- Documentation using [MkDocs](https://www.mkdocs.org) and [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/) theme
+- Documentation using [Sphinx](https://www.sphinx-doc.org/en/master/)
 - [Pre-commit](https://pre-commit.com) hooks
 - Makefile to automate setup, compilation, testing etc.
 
