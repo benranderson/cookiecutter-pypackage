@@ -57,5 +57,8 @@ safe: ## check for security vulnerabilities
 build: clean ## build package
 	python setup.py sdist bdist_wheel
 
+dev-install: clean ## install editable version of the package
+	pip install -e ".[dev]"
+
 docs: ## Rebuild docs on changes, with live-reload in the browser
 	sphinx-autobuild docs docs/_build/html
