@@ -7,12 +7,9 @@ variables:
   artifactFeed: {{ cookiecutter.artifact_feed }}
   publishedVersion: 3.10
 
-# trigger only when the package or its build has been modified
-trigger:
-  branches:
-    include:
-    - "*"
-    - refs/tags/*
+  trigger:
+  - master
+  - develop
 
 jobs:
 
@@ -27,6 +24,9 @@ jobs:
       displayName: Use Python $(publishedVersion)
       inputs:
         versionSpec: $(publishedVersion)
+    
+    - script: python -m pip install --upgrade pip
+      displayName: Upgrade pip
 
     - script: |
         pip install black
@@ -42,8 +42,6 @@ jobs:
 
   strategy:
     matrix:
-      python37:
-        pythonVersion: 3.7
       python38:
         pythonVersion: 3.8
       python39:
@@ -61,7 +59,7 @@ jobs:
       inputs:
         versionSpec: $(pythonVersion)
 
-        - script: |
+    - script: |
         pip install flake8 flake8-bandit flake8-black flake8-broken-line flake8-bugbear flake8-comprehensions flake8-debugger isort
         isort --profile black $(srcDirectory)
         flake8 $(srcDirectory) $(testsDirectory)
@@ -92,8 +90,8 @@ jobs:
 
   dependsOn: Build
 
-  # only publish when the previous Jobs are successful and a tag is pushed
-  condition: and(succeeded(), startsWith(variables['build.sourceBranch'], 'refs/tags/'))
+  # only publish when the previous Jobs are successful and building master branch
+  condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/master'))
 
   steps:
 
