@@ -12,6 +12,10 @@ repos:
     -   id: debug-statements
     -   id: name-tests-test
         args: ["--pytest-test-first"]
+-   repo: https://github.com/charliermarsh/ruff-pre-commit
+    rev: v0.0.261
+    hooks:
+    -   id: ruff
 -   repo: https://github.com/pycqa/isort
     rev: 5.12.0
     hooks:
@@ -22,10 +26,5 @@ repos:
     -   id: black
         name: black
         entry: black .
-        language: python
-        types: [python]
-    -   id: flake8
-        name: flake8
-        entry: flake8
         language: python
         types: [python]

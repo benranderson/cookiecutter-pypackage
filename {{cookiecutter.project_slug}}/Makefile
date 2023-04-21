@@ -1,4 +1,4 @@
-.PHONY: help clean clean-test clean-pyc clean-build lint test test-all build docs
+.PHONY: help clean clean-test clean-pyc clean-build lint isort test test-all build docs
 .DEFAULT_GOAL := help
 
 define PRINT_HELP_PYSCRIPT
@@ -41,8 +41,11 @@ clean-test: ## remove test and coverage artifacts
 	rm -f .testmondata
 	rm -fr .hypothesis
 
-lint: ## check style with flake8
-	flake8 src tests noxfile.py
+lint: ## check style using ruff
+	ruff check src tests noxfile.py
+
+isort: ## sort imports
+	isort --profile black src tests
 
 test: ## run tests quickly with default Python and check coverage
 	pytest --cov src --cov-report term --cov-report html

@@ -29,9 +29,19 @@ jobs:
       displayName: Upgrade pip
 
     - script: |
+        pip install ruff
+        ruff check $(srcDirectory) $(testsDirectory)
+      displayName: Linting check
+
+    - script: |
         pip install black
         black $(srcDirectory) $(testsDirectory)
       displayName: Black formatting check
+
+    - script: |
+        pip install isort
+        isort --profile black $(srcDirectory)
+      displayName: Imports check
 
     - script: |
         pip install safety
@@ -58,12 +68,6 @@ jobs:
       displayName: Use Python $(pythonVersion)
       inputs:
         versionSpec: $(pythonVersion)
-
-    - script: |
-        pip install flake8 flake8-bandit flake8-black flake8-broken-line flake8-bugbear flake8-comprehensions flake8-debugger isort
-        isort --profile black $(srcDirectory)
-        flake8 $(srcDirectory) $(testsDirectory)
-      displayName: Linting check
 
     - script: |
         pip install pytest pytest-azurepipelines pytest-cov

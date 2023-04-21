@@ -1,0 +1,21 @@
+select = [
+    "B",  # bugbear
+    "B9",  # bugbear's opinionated warnings
+    "C",  # mccabe
+    "C4",  # comprehensions
+    "E", # pycodestyle
+    "F",  # pyflakes
+    "G",  # logging-format
+    "PD",  # pandas-vet
+    "PT",  # pytest-style
+    "Q",  # quotes
+    "RSE",  # raise
+    "S",  # bandit
+    "SIM",  # simplify
+    "T10",  # debugger
+    "W", # pycodestyle
+]
+
+[per-file-ignores]
+# bandit to ignore test assert statements
+"tests/*" = ["S101"]
