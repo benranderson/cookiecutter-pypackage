@@ -53,6 +53,8 @@ jobs:
         pythonVersion: 3.9
       python310:
         pythonVersion: 3.10
+      python311:
+        pythonVersion: 3.11
 
   pool:
     vmImage: $(vmImage)
