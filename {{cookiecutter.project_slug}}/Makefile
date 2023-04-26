@@ -58,7 +58,7 @@ safe: ## check for security vulnerabilities
 	safety check --file=requirements.txt --full-report
 
 build: clean ## build package
-	python setup.py sdist bdist_wheel
+	python -m build
 
 dev-install: clean ## install editable version of the package
 	pip install -e ".[dev]"
