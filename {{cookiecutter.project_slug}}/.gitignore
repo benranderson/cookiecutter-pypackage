@@ -109,3 +109,6 @@ cookiecutter-pypackage-env/
 # profiling
 *.lprof
 profile.stats
+
+# ruff
+.ruff_cache/
