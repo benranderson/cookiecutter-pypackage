@@ -45,7 +45,7 @@ lint: ## check style using ruff
 	ruff check src tests noxfile.py
 
 isort: ## sort imports
-	isort --profile black src tests
+	isort src tests
 
 test: ## run tests quickly with default Python and check coverage
 	pytest --cov src --cov-report term --cov-report html
