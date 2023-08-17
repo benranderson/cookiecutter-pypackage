@@ -40,6 +40,7 @@ clean-test: ## remove test and coverage artifacts
 	rm -fr .pytest_cache
 	rm -f .testmondata
 	rm -fr .hypothesis
+	rm -fr .ruff_cache
 
 lint: ## check style using ruff
 	ruff src tests noxfile.py

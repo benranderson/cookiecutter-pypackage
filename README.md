@@ -13,7 +13,7 @@ Cookiecutter template for a Python package.
 - Linting using [Ruff](https://beta.ruff.rs/docs/)
 - Code formatting using [Black](https://black.readthedocs.io/en/stable/)
 - [Pre-commit](https://pre-commit.com) hooks
-- `Makefile` to automate setup, compilation, testing etc.
+- `Makefile` (for macOS/Linux) and `make.bat` (for Windows) to automate setup, compilation, testing etc.
 
 Cookiecutter: [https://github.com/cookiecutter/cookiecutter](https://github.com/cookiecutter/cookiecutter)
 

@@ -7,7 +7,7 @@ import {{ cookiecutter.project_slug }}.__main__ as main
 from {{ cookiecutter.project_slug }} import __version__
 
 
-@pytest.fixture
+@pytest.fixture()
 def runner():
     """Fixture for invoking command-line interfaces."""
     return CliRunner()
