@@ -30,18 +30,13 @@ jobs:
 
     - script: |
         pip install ruff
-        ruff check $(srcDirectory) $(testsDirectory)
+        ruff $(srcDirectory) $(testsDirectory)
       displayName: Linting check
 
     - script: |
         pip install black
         black $(srcDirectory) $(testsDirectory)
       displayName: Black formatting check
-
-    - script: |
-        pip install isort
-        isort --profile black $(srcDirectory)
-      displayName: Imports check
 
 - job: Build
 
