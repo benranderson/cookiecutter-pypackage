@@ -78,6 +78,7 @@ dev = [
     "pre-commit>=4.2",
     "pytest>=8.3",
     "pytest-cov>=6",
+    "pytest-watcher>=0.4.3",
     "ruff>=0.12",
 ]
 docs = [

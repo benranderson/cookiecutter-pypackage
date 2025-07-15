@@ -9,12 +9,11 @@ IF /I "%1"=="clean" GOTO clean
 IF /I "%1"=="clean-build" GOTO clean-build
 IF /I "%1"=="clean-pyc" GOTO clean-pyc
 IF /I "%1"=="clean-test" GOTO clean-test
-IF /I "%1"=="dev-install" GOTO dev-install
 IF /I "%1"=="lint" GOTO lint
+IF /I "%1"=="format" GOTO format
 IF /I "%1"=="test" GOTO test
 IF /I "%1"=="watch" GOTO watch
 IF /I "%1"=="cover" GOTO cover
-IF /I "%1"=="safe" GOTO safe
 IF /I "%1"=="build" GOTO build
 IF /I "%1"=="docs" GOTO docs
 GOTO error
@@ -68,39 +67,33 @@ GOTO error
 	RMDIR /Q /S .ruff_cache
 	GOTO :EOF
 
-:dev-install
-	CALL make.bat clean
-	python -m pip install -e ".[dev]"
+:lint
+	uv run ruff check src tests --fix
 	GOTO :EOF
 
-:lint
-	ruff src tests
+:format
+	uv run ruff format src tests
 	GOTO :EOF
 
 :test
-	pytest tests
+	uv run pytest tests
 	GOTO :EOF
 
 :watch
-	ptw --runner "pytest --testmon tests"
+	uv run ptw .
 	GOTO :EOF
 
 :cover
-	pytest tests --cov src --cov-report term --cov-report html
+	uv run pytest tests --cov src --cov-report term --cov-report html
 	htmlcov\index.html
 	GOTO :EOF
 
-:safe
-    CALL make.bat clean
-	safety check --full-report
-    GOTO :EOF
-
 :build
-	python -m build
+	uv build
     GOTO :EOF
 
 :docs
-	sphinx-autobuild docs docs/_build/html --open-browser
+	uv run sphinx-autobuild docs docs/_build/html --open-browser
 	GOTO :EOF
 
 :error
