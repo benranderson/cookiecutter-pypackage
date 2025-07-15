@@ -110,5 +110,15 @@ cookiecutter-pypackage-env/
 *.lprof
 profile.stats
 
-# ruff
+# Ruff
 .ruff_cache/
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+env.bat

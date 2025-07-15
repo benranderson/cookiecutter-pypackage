@@ -21,10 +21,25 @@ Install the latest version of Cookiecutter:
 uv tool install cookiecutter
 ```
 
-Generate a personal access token for Azure DevOps with the `Code (Read)` scope.
+Generate a personal access token for Azure DevOps with `Code (Read)` and `Packaging (Read)` scopes.
 
-Generate a Python package project, replacing `{PAT}` with your personal access token:
+Generate a Python package project, replacing `<PAT>` with your personal access token:
 
 ```shell
-cookiecutter https://{PAT}@dev.azure.com/technipfmc-dev/SubseaDesign/_git/cookiecutter-pypackage
+cookiecutter https://<PAT>@dev.azure.com/technipfmc-dev/SubseaDesign/_git/cookiecutter-pypackage
+```
+
+Navigate to the newly created project directory.
+
+Set your environment variables for authentication in a new `env.bat` file and run it:
+
+```env
+set UV_INDEX_ADO_USERNAME=dummy
+set UV_INDEX_ADO_PASSWORD=<PAT>
+```
+
+Run the following command to create the virtual environment and install the project dependencies:
+
+```shell
+uv sync
 ```
