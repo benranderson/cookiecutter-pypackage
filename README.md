@@ -1,6 +1,6 @@
 # Cookiecutter PyPackage
 
-Cookiecutter template for a Python package.
+[Cookiecutter](https://cookiecutter.readthedocs.io/en/stable/) template for a Python package.
 
 ## Features
 
@@ -15,18 +15,18 @@ Cookiecutter template for a Python package.
 - [Pre-commit](https://pre-commit.com) hooks
 - `Makefile` (for macOS/Linux) and `make.bat` (for Windows) to automate setup, compilation, testing etc.
 
-Cookiecutter: [https://github.com/cookiecutter/cookiecutter](https://github.com/cookiecutter/cookiecutter)
-
 ## Quickstart
 
-Install the latest Cookiecutter if you haven't installed it yet:
+Install the latest version of Cookiecutter:
 
 ```shell
-pip install -U cookiecutter
+uv tool install cookiecutter
 ```
 
-Generate a Python package project:
+Generate a personal access token for Azure DevOps with the `Code (Read)` scope.
+
+Generate a Python package project, replacing `{PAT}` with your personal access token:
 
 ```shell
-cookiecutter https://github.com/benranderson/cookiecutter-pypackage
+cookiecutter https://{PAT}@dev.azure.com/technipfmc-dev/SubseaDesign/_git/cookiecutter-pypackage
 ```
