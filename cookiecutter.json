@@ -1,12 +1,12 @@
 {
-    "full_name": "Ben Randerson",
-    "email": "ben.m.randerson@gmail.com",
+    "full_name": "First Second",
+    "email": "first.second@example.com",
     "project_name": "PyPackage",
     "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}",
     "project_short_description": "Boilerplate for a Python package.",
     "version": "0.1.0",
     "azure_project": "SubseaDesign",
     "repo_url": "https://dev.azure.com/technipfmc-dev/{{ cookiecutter.azure_project }}/_git/{{ cookiecutter.project_slug }}",
+    "docs_url": "https://azsane02uks{{ cookiecutter.project_slug }}.z33.web.core.windows.net",
     "artifact_feed": "{{ cookiecutter.azure_project }}Feed",
-    "dev_venv": "{{ cookiecutter.project_slug }}-dev"
 }

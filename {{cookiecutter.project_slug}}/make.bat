@@ -5,7 +5,6 @@ SET 	match=re.match(r'^([a-zA-Z_-]+):.*?
 IF /I "%1"==".DEFAULT_GOAL " GOTO .DEFAULT_GOAL
 IF /I "%1"=="for line in sys.stdin" GOTO for line in sys.stdin
 IF /I "%1"=="help" GOTO help
-IF /I "%1"=="activate" GOTO activate
 IF /I "%1"=="clean" GOTO clean
 IF /I "%1"=="clean-build" GOTO clean-build
 IF /I "%1"=="clean-pyc" GOTO clean-pyc
@@ -35,9 +34,6 @@ GOTO error
 :help
 	@python -c "$$PRINT_HELP_PYSCRIPT" < %MAKEFILE_LIST%
 	GOTO :EOF
-
-:activate
-	%userprofile%\.virtualenvs\{{ cookiecutter.dev_venv }}\Scripts\activate
 
 :clean
 	CALL make.bat clean-build
