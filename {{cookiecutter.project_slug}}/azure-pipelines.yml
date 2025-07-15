@@ -1,19 +1,24 @@
 variables:
+  # Project configuration
   package: {{ cookiecutter.project_slug }}
   srcDirectory: src/$(package)
   testsDirectory: tests/
-  vmImage: windows-latest
+  publishedVersion: 3.13
+
+  # Infrastructure
+  vmImage: ubuntu-latest
+
+  # Azure DevOps configuration
   azureProject: {{ cookiecutter.azure_project }}
   artifactFeed: {{ cookiecutter.artifact_feed }}
-  publishedVersion: 3.10
-
+  
 trigger:
   - master
   - develop
 
 jobs:
 
-- job: FormattingSafety
+- job: StaticChecks
 
   pool:
     vmImage: $(vmImage)
@@ -25,31 +30,46 @@ jobs:
       inputs:
         versionSpec: $(publishedVersion)
     
-    - script: python -m pip install --upgrade pip
-      displayName: Upgrade pip
+    - script: |
+        curl -LsSf https://astral.sh/uv/install.sh | sh
+      displayName: Install uv
+    
+    # ref: https://dev.to/kummerer94/azure-pipelines-uv-cache-46ii
+    - bash: |
+        echo "##vso[task.setvariable variable=uv-cache-path;]$(uv cache dir)"
+      displayName: Get uv cache path
+  
+    - task: Cache@2
+      displayName: Cache uv
+      inputs:
+        key: uv cache | "$(publishedVersion)"
+        path: $(uv-cache-path)
 
     - script: |
-        pip install ruff
-        ruff $(srcDirectory) $(testsDirectory)
+        uv sync --only-dev
+      displayName: Install dev dependencies
+      env:
+        UV_INDEX_ADO_PASSWORD: $(System.AccessToken)
+        UV_KEYRING_PROVIDER: disabled
+
+    - script: uv run --only-dev ruff check $(srcDirectory) $(testsDirectory)
       displayName: Linting check
 
-    - script: |
-        pip install black
-        black $(srcDirectory) $(testsDirectory)
-      displayName: Black formatting check
+    - script: uv run --only-dev ruff format $(srcDirectory) $(testsDirectory)
+      displayName: Formatting check
 
 - job: Build
 
   strategy:
     matrix:
-      python38:
-        pythonVersion: 3.8
-      python39:
-        pythonVersion: 3.9
       python310:
         pythonVersion: 3.10
       python311:
         pythonVersion: 3.11
+      python312:
+        pythonVersion: 3.12
+      python313:
+        pythonVersion: 3.13
 
   pool:
     vmImage: $(vmImage)
@@ -62,22 +82,34 @@ jobs:
         versionSpec: $(pythonVersion)
 
     - script: |
-        pip install pytest pytest-azurepipelines pytest-cov
-        pip install .
-        pytest $(testsDirectory) --cov $(package) --cov-report html
+        curl -LsSf https://astral.sh/uv/install.sh | sh
+      displayName: Install uv
+    
+    - script: |
+        uv sync --all-extras
+      displayName: Install dependencies
+      env:
+        UV_INDEX_ADO_PASSWORD: $(System.AccessToken)
+        UV_KEYRING_PROVIDER: disabled
+
+    - script: |
+        uv run pytest $(testsDirectory) --cov $(package) --cov-report html
       displayName: Run the test suite
 
     - script: |
-        pip install build
-        python -m build
+        uv build
       displayName: Build package
+      env:
+        UV_INDEX_ADO_PASSWORD: $(System.AccessToken)
+        UV_KEYRING_PROVIDER: disabled
 
     # upload everything in dist/ to the build artifacts for later use or debugging
-    - task: PublishPipelineArtifact@0
+    - task: PublishPipelineArtifact@1
       displayName: Publish package artifacts
       inputs:
-        artifactName: dist$(pythonVersion)
         targetPath: dist
+        artifact: dist$(pythonVersion)
+        publishLocation: pipeline
 
 - job: Publish
 
@@ -104,7 +136,11 @@ jobs:
       inputs:
         versionSpec: $(publishedVersion)
 
-    - script: pip install twine
+    - script: |
+        curl -LsSf https://astral.sh/uv/install.sh | sh
+      displayName: Install uv
+
+    - script: uv tool install twine
       displayName: Install packages for publishing
 
     - task: TwineAuthenticate@1
