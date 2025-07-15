@@ -8,5 +8,5 @@
     "azure_project": "SubseaDesign",
     "repo_url": "https://dev.azure.com/technipfmc-dev/{{ cookiecutter.azure_project }}/_git/{{ cookiecutter.project_slug }}",
     "docs_url": "https://azsane02uks{{ cookiecutter.project_slug }}.z33.web.core.windows.net",
-    "artifact_feed": "{{ cookiecutter.azure_project }}Feed",
+    "artifact_feed": "{{ cookiecutter.azure_project }}Feed"
 }
