@@ -6,7 +6,6 @@
 
 - Command line interface using [Click](https://click.palletsprojects.com/en/8.1.x/) and [rich-click](https://github.com/ewels/rich-click) for nice formatting
 - Testing setup with [pytest](https://docs.pytest.org/en/stable/) and [pytest-cov](https://github.com/pytest-dev/pytest-cov)
-- Test against multiple Python versions with [nox](https://nox.thea.codes/en/stable/)
 - Continuous Integration using [azure-pipelines](https://azure.microsoft.com/en-gb/services/devops/pipelines/)
 - Auto-release to an [Azure Artifacts Feed](https://azure.microsoft.com/en-us/services/devops/artifacts/) when you push a new tag
 - Documentation via [Sphinx](https://www.sphinx-doc.org/en/master/) using the [PyData Sphinx](https://pydata-sphinx-theme.readthedocs.io/en/stable/) theme and CLI docs auto-generated using [sphinx-click](https://github.com/click-contrib/sphinx-click)

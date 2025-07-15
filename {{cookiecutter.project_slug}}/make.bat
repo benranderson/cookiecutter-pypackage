@@ -59,7 +59,6 @@ GOTO error
 
 :clean-test
 	RMDIR /Q /S .tox
-	RMDIR /Q /S .nox
 	DEL /Q .coverage /F
 	RMDIR /Q /S htmlcov
 	DEL /Q cov.xml /F

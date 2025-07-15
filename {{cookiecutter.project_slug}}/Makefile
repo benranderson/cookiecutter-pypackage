@@ -33,7 +33,6 @@ clean-pyc: ## remove Python file artifacts
 
 clean-test: ## remove test and coverage artifacts
 	rm -fr .tox/
-	rm -fr .nox/
 	rm -f .coverage
 	rm -fr htmlcov/
 	rm -f cov.xml
@@ -43,7 +42,7 @@ clean-test: ## remove test and coverage artifacts
 	rm -fr .ruff_cache
 
 lint: ## check style using ruff
-	ruff src tests noxfile.py
+	ruff src tests
 
 test: ## run tests quickly with default Python
 	pytest tests
@@ -54,9 +53,6 @@ watch: ## continuously run unit tests on changed code
 cover: ## run tests quickly with default Python and check coverage
 	pytest --cov src --cov-report term --cov-report html
 	open htmlcov/index.html
-
-test-all: ## run tests on every Python version with nox
-	nox
 
 safe: ## check for security vulnerabilities
 	safety check --full-report
